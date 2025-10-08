@@ -371,22 +371,6 @@ app.get('/api/templates', async (req, res) => {
   }
 });
 
-axios.get(`${MISP_URL}/events/index`, {
-  headers: {
-    Authorization: MISP_KEY,
-    Accept: 'application/json',
-  },
-  params: {
-    limit: 100,
-  },
-})
-  .then(res => {
-    console.log('✅ Fetched', res.data.length, 'events');
-  })
-  .catch(err => {
-    console.error('❌ Error:', err.response?.status, err.response?.data || err.message);
-  });
-
 
 const setupAndStartServer = () => {
     app.listen(PORT, async () => {
