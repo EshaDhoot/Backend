@@ -1,9 +1,8 @@
 const crypto = require('crypto');
-const nodemailer = require('nodemailer');
-const { Resend } = require('resend');
-
+const sgMail = require('@sendgrid/mail');
 const { EMAIL_ID, RESEND_API_KEY } = require('../config/server-config.js');
-const resend = new Resend(RESEND_API_KEY);
+sgMail.setApiKey(RESEND_API_KEY);
+
 const generateOTP = () => {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     return otp;
@@ -40,10 +39,11 @@ const verifyHashedPassword = (password, hashedPassword) => {
 
 const sendOTPByEmail = async (email, otp) => {
     try {
-       await resend.emails.send({
-            from: `Your App <${EMAIL_ID}>`,
+      const msg = {
             to: email,
+            from: EMAIL_ID,
             subject: 'Email Verification - Your OTP',
+            text: `Your OTP for email verification is: ${otp}. Valid for 10 minutes.`,
             html: `
                 <div style="font-family: Arial, sans-serif; line-height: 1.6;">
                     <h2>🔐 Email Verification</h2>
@@ -53,8 +53,9 @@ const sendOTPByEmail = async (email, otp) => {
                     <p>If you didn’t request this, please ignore this email.</p>
                 </div>
             `,
-        });
+        };
 
+        await sgMail.send(msg);
         // console.log(`OTP sent successfully to ${email}`);
     } catch (error) {
         console.error('Failed to send OTP email:', error);

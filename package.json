@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^8.1.6",
     "argon2": "^0.43.1",
     "axios": "^1.12.2",
     "cors": "^2.8.5",
@@ -22,10 +23,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.15.0",
     "multer": "^2.0.2",
-    "nodemailer": "^7.0.5",
     "nodemon": "^3.1.10",
     "path": "^0.12.7",
-    "resend": "^6.1.2",
     "util": "^0.12.5",
     "xml2js": "^0.6.2"
   }
